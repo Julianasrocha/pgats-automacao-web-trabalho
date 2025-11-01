@@ -1,10 +1,20 @@
 import { faker } from "@faker-js/faker"
 
 class Register {
-    fillFullRegisterForm() {
+    fillSignupForm(firstName, lastName, email) {
+        cy.get('[data-qa="signup-name"]').type(`${firstName} ${lastName}`)
+        cy.get('[data-qa="signup-email"]').type(`${email}`)
+
+        cy.contains('button', 'Signup').click()
+
+        cy.get('h2.title')
+            .contains('Enter Account Information')
+            .should('be.visible')
+    }
+    fillFullRegisterForm(password) {
         cy.get('#id_gender1').check()
 
-        cy.get('input#password').type('12345', { log: false })
+        cy.get('input#password').type(password, { log: false })
 
         //para combobox ou selects -> select
         cy.get('select[data-qa="days"]').select('20')
@@ -27,6 +37,17 @@ class Register {
 
         // Act
         cy.get('[data-qa="create-account"]').click()
+
+        // Assert
+        cy.url().should('includes', 'account_created')
+        cy.contains(`b`, 'Account Created!')
+        cy.get('[data-qa="account-created"]').should('be.visible', 'ACCOUNT CREATED!')
+    }
+    continue() {
+        cy.get('[data-qa="continue-button"]').click()
+    }
+    assertHomePage() {
+        cy.get(':nth-child(4) > a').should('contain.text', 'Signup / Login')
     }
 }
 
