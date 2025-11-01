@@ -1,0 +1,17 @@
+{
+  "name": "automationexercise-cypress",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cypress test automation for http://automationexercise.com",
+  "scripts": {
+    "test": "cypress run",
+    "cypress:open": "cypress open",
+    "cypress:run:report": "cypress run --headless --browser chrome --reporter cypress-mochawesome-reporter --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true",
+    "ci": "npm run cypress:run:report"
+  },
+  "devDependencies": {
+    "cypress": "^13.7.3",
+    "@faker-js/faker": "^10.1.0",
+    "cypress-mochawesome-reporter": "^4.0.2"
+  }
+}
