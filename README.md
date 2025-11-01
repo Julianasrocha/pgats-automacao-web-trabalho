@@ -2,41 +2,37 @@
 
 This repository contains Cypress end-to-end tests for http://automationexercise.com.
 
-What is included
-- Cypress configuration and example tests for: user registration, valid login, invalid login.
-- Reusable selectors and custom commands in `cypress/support` for code reuse.
-- GitHub Actions workflow to run tests and upload reports.
-
 Quick start (locally)
 
 1. Install dependencies:
 
-```powershell
+```bash
 npm ci
 ```
 
-2. Open Cypress GUI:
+2. Open Cypress GUI (interactive):
 
-```powershell
+```bash
 npm run cypress:open
 ```
 
-3. Run headless tests (generates mochawesome json report):
+3. Run headless tests with reporter (CI-friendly):
 
-```powershell
+```bash
+# runs headless on Chrome and generates HTML report in cypress/reports
 npm run cypress:run:report
-npm run report:merge
-npm run report:generate
 ```
 
 CI
 
-The GitHub Actions workflow (`.github/workflows/ci.yml`) installs dependencies and runs:
+The GitHub Actions workflow (`.github/workflows/ci.yml`) does the following:
+- installs dependencies with `npm ci`
+- runs `npm run cypress:run:report` (headless Chrome, reporter configured)
+- uploads the `cypress/reports` folder as an artifact so you can download it from the workflow run
+- attempts to publish the HTML report to GitHub Pages (gh-pages) so you can view it in-browser
 
-- `npm run cypress:run:report`
-- merges and generates an HTML report from mochawesome output
-- uploads the `cypress/reports` folder as an artifact
-
-Notes
-- Selectors are centralized in `cypress/support/selectors.js` and logic lives in `cypress/support/commands.js`.
-- The tests create test users using a random email to avoid collisions.
+Where to find things
+- Tests: `cypress/e2e` (spec files)
+- Modules / page objects: `cypress/modules` (e.g. `register`, `login`)
+- Cypress config: `cypress.config.js`
+- CI workflow: `.github/workflows/ci.yml`
