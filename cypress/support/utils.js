@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker"
 
-export const url = 'http://automationexercise.com'
+export const url = 'https://automationexercise.com/'
 export const iphone_xr = 'iphone-xr'
 
 export const firstName = faker.person.firstName()

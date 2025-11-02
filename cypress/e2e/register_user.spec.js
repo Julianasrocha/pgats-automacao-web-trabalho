@@ -2,6 +2,13 @@ import user from '../modules/user'
 import register from '../modules/register'
 import { url, iphone_xr, firstName, lastName, email, password } from '../support/utils'
 
+const REGISTER_SELECTORS = {
+  nameInput: '[data-qa="signup-name"]',
+  emailInput: '[data-qa="signup-email"]',
+  signupButton: 'button:contains("Signup")',
+  errorMessage: '.signup-form > form > p'
+}
+
 describe('Register User', () => {
   beforeEach(() => {
     cy.viewport(iphone_xr)
@@ -35,12 +42,10 @@ describe('Register User', () => {
 
       user.logout()
 
-      cy.get('[data-qa="signup-name"]').type(`${firstName} ${lastName}`)
-      cy.get('[data-qa="signup-email"]').type(`${email}`)
-
-      cy.contains('button', 'Signup').click()
-
-      cy.get('.signup-form > form > p').should('contain.text', 'Email Address already exist!')
+      cy.get(REGISTER_SELECTORS.nameInput).type(`${firstName} ${lastName}`)
+      cy.get(REGISTER_SELECTORS.emailInput).type(`${email}`)
+      cy.get(REGISTER_SELECTORS.signupButton).click()
+      cy.get(REGISTER_SELECTORS.errorMessage).should('contain.text', 'Email Address already exist!')
     })
   })
 });

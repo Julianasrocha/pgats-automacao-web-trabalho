@@ -50,7 +50,7 @@ describe('Login / Logout User', () => {
 
             user.logout()
 
-            register.assertHomePage()
+            register.assertLoginPage()
         });
     })
 })
